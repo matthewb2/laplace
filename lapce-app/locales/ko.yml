@@ -1,0 +1,8 @@
+# locales/ko.yml
+version: "버전"
+Website: "웹사이트"
+GitHub: "깃허브"
+laplace: "라플라스"
+# 여기에 추가하고 싶은 다른 한국어 번역 키-값 쌍을 작성합니다.
+hello: "안녕하세요"
+welcome: "환영합니다"
