@@ -23,9 +23,11 @@ struct AboutUri {}
 impl AboutUri {
     const LAPCE: &'static str = "http://mksolution.dothome.co.kr";
     const GITHUB: &'static str = "https://github.com/matthewb2/laplace";
+    /*
     const MATRIX: &'static str = "https://matrix.to/#/#laplace-editor:matrix.org";
     const DISCORD: &'static str = "";
     const CODICONS: &'static str = "https://github.com/microsoft/vscode-codicons";
+    */
 }
 
 #[derive(Clone, Debug)]

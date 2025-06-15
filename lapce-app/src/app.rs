@@ -3712,7 +3712,7 @@ fn window(window_data: WindowData) -> impl View {
             let lapce_command = window_tab.common.lapce_command;
             window_menu(lapce_command, workbench_command)
         } else {
-            Menu::new("Laplace")
+            Menu::new(t!("Laplace"))
         }
     })
     .style(|s| s.size_full())
@@ -3735,11 +3735,11 @@ pub fn launch() {
 
         const FONT_DEJAVU_SANS_REGULAR: &[u8] = include_bytes!(concat!(
             env!("CARGO_MANIFEST_DIR"),
-            "/../extra/fonts/DejaVu/DejaVuSans.ttf"
+            "/../extra/fonts/NanumGothicCoding.ttf"
         ));
         const FONT_DEJAVU_SANS_MONO_REGULAR: &[u8] = include_bytes!(concat!(
             env!("CARGO_MANIFEST_DIR"),
-            "/../extra/fonts/DejaVu/DejaVuSansMono.ttf"
+            "/../extra/fonts/NanumGothicCoding.ttf"
         ));
 
         FONT_SYSTEM
@@ -4169,24 +4169,25 @@ fn listen_local_socket(tx: SyncSender<CoreNotification>) -> Result<()> {
     Ok(())
 }
 
-pub fn window_menu(
+pub fn window_menu(    
     lapce_command: Listener<LapceCommand>,
     workbench_command: Listener<LapceWorkbenchCommand>,
 ) -> Menu {
-    Menu::new("Laplace")
+    rust_i18n::set_locale("ko");
+    Menu::new(t!("Laplace"))
         .entry({
-            let mut menu = Menu::new("Laplace")
-                .entry(MenuItem::new("About Laplace").action(move || {
+            let mut menu = Menu::new(t!("Laplace"))
+                .entry(MenuItem::new(t!("About Laplace")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::ShowAbout)
                 }))
                 .separator()
                 .entry(
-                    Menu::new("Settings...")
-                        .entry(MenuItem::new("Open Settings").action(move || {
+                    Menu::new(t!("Settings..."))
+                        .entry(MenuItem::new(t!("Open Settings")).action(move || {
                             workbench_command
                                 .send(LapceWorkbenchCommand::OpenSettings);
                         }))
-                        .entry(MenuItem::new("Open Keyboard Shortcuts").action(
+                        .entry(MenuItem::new(t!("Open Keyboard Shortcuts")).action(
                             move || {
                                 workbench_command.send(
                                     LapceWorkbenchCommand::OpenKeyboardShortcuts,
@@ -4195,84 +4196,84 @@ pub fn window_menu(
                         )),
                 )
                 .separator()
-                .entry(MenuItem::new("Quit Laplace").action(move || {
+                .entry(MenuItem::new(t!("Quit Laplace")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::Quit);
                 }));
             if cfg!(target_os = "macos") {
                 menu = menu
                     .separator()
-                    .entry(MenuItem::new("Hide Laplace"))
-                    .entry(MenuItem::new("Hide Others"))
-                    .entry(MenuItem::new("Show All"))
+                    .entry(MenuItem::new(t!("Hide Laplace")))
+                    .entry(MenuItem::new(t!("Hide Others")))
+                    .entry(MenuItem::new(t!("Show All")))
             }
             menu
         })
         .separator()
         .entry(
-            Menu::new("File")
-                .entry(MenuItem::new("New File").action(move || {
+            Menu::new(t!("File"))
+                .entry(MenuItem::new(t!("New File")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::NewFile);
                 }))
                 .separator()
-                .entry(MenuItem::new("Open").action(move || {
+                .entry(MenuItem::new(t!("Open")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::OpenFile);
                 }))
-                .entry(MenuItem::new("Open Folder").action(move || {
+                .entry(MenuItem::new(t!("Open Folder")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::OpenFolder);
                 }))
                 .separator()
-                .entry(MenuItem::new("Save").action(move || {
+                .entry(MenuItem::new(t!("Save")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Focus(FocusCommand::Save),
                         data: None,
                     });
                 }))
-                .entry(MenuItem::new("Save All").action(move || {
+                .entry(MenuItem::new(t!("Save All")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::SaveAll);
                 }))
                 .separator()
-                .entry(MenuItem::new("Close Folder").action(move || {
+                .entry(MenuItem::new(t!("Close Folder")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::CloseFolder);
                 }))
-                .entry(MenuItem::new("Close Window").action(move || {
+                .entry(MenuItem::new(t!("Close Window")).action(move || {
                     workbench_command.send(LapceWorkbenchCommand::CloseWindow);
                 })),
         )
         .entry(
-            Menu::new("Edit")
-                .entry(MenuItem::new("Cut").action(move || {
+            Menu::new(t!("Edit"))
+                .entry(MenuItem::new(t!("Cut")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Edit(EditCommand::ClipboardCut),
                         data: None,
                     });
                 }))
-                .entry(MenuItem::new("Copy").action(move || {
+                .entry(MenuItem::new(t!("Copy")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Edit(EditCommand::ClipboardCopy),
                         data: None,
                     });
                 }))
-                .entry(MenuItem::new("Paste").action(move || {
+                .entry(MenuItem::new(t!("Paste")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Edit(EditCommand::ClipboardPaste),
                         data: None,
                     });
                 }))
                 .separator()
-                .entry(MenuItem::new("Undo").action(move || {
+                .entry(MenuItem::new(t!("Undo")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Edit(EditCommand::Undo),
                         data: None,
                     });
                 }))
-                .entry(MenuItem::new("Redo").action(move || {
+                .entry(MenuItem::new(t!("Redo")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Edit(EditCommand::Redo),
                         data: None,
                     });
                 }))
                 .separator()
-                .entry(MenuItem::new("Find").action(move || {
+                .entry(MenuItem::new(t!("Find")).action(move || {
                     lapce_command.send(LapceCommand {
                         kind: CommandKind::Focus(FocusCommand::Search),
                         data: None,
@@ -4290,30 +4291,30 @@ fn tab_secondary_click(
     let child_right = child.clone();
     let child_left = child.clone();
     menu = menu
-        .entry(MenuItem::new("Close").action(move || {
+        .entry(MenuItem::new(t!("Close")).action(move || {
             internal_command.send(InternalCommand::EditorTabChildClose {
                 editor_tab_id,
                 child: child.clone(),
             });
         }))
-        .entry(MenuItem::new("Close Other Tabs").action(move || {
+        .entry(MenuItem::new(t!("Close Other Tabs")).action(move || {
             internal_command.send(InternalCommand::EditorTabCloseByKind {
                 editor_tab_id,
                 child: child_other.clone(),
                 kind: TabCloseKind::CloseOther,
             });
         }))
-        .entry(MenuItem::new("Close All Tabs").action(move || {
+        .entry(MenuItem::new(t!("Close All Tabs")).action(move || {
             internal_command.send(InternalCommand::EditorTabClose { editor_tab_id });
         }))
-        .entry(MenuItem::new("Close Tabs to the Right").action(move || {
+        .entry(MenuItem::new(t!("Close Tabs to the Right")).action(move || {
             internal_command.send(InternalCommand::EditorTabCloseByKind {
                 editor_tab_id,
                 child: child_right.clone(),
                 kind: TabCloseKind::CloseToRight,
             });
         }))
-        .entry(MenuItem::new("Close Tabs to the Left").action(move || {
+        .entry(MenuItem::new(t!("Close Tabs to the Left")).action(move || {
             internal_command.send(InternalCommand::EditorTabCloseByKind {
                 editor_tab_id,
                 child: child_left.clone(),
