@@ -97,7 +97,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::Workbench(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     for c in EditCommand::iter() {
@@ -105,7 +105,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::Edit(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     for c in MoveCommand::iter() {
@@ -113,7 +113,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::Move(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     for c in ScrollCommand::iter() {
@@ -121,7 +121,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::Scroll(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     for c in FocusCommand::iter() {
@@ -129,7 +129,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::Focus(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     for c in MotionModeCommand::iter() {
@@ -137,7 +137,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::MotionMode(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     for c in MultiSelectionCommand::iter() {
@@ -145,7 +145,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
             kind: CommandKind::MultiSelection(c.clone()),
             data: None,
         };
-        commands.insert(c.to_string(), command);
+        commands.insert(t!(c.into()).to_string(), command);
     }
 
     commands
@@ -164,7 +164,7 @@ pub fn lapce_internal_commands() -> IndexMap<String, LapceCommand> {
 )]
 pub enum LapceWorkbenchCommand {
     #[strum(serialize = "enable_modal_editing")]
-    #[strum(message = "Enable Modal Editing")]
+    #[strum(message = "모달 편집 활성화")]
     EnableModal,
 
     #[strum(serialize = "disable_modal_editing")]
@@ -548,7 +548,7 @@ pub enum LapceWorkbenchCommand {
     RestartToUpdate,
 
     #[strum(serialize = "show_about")]
-    #[strum(message = "About Laplace")]
+    #[strum(message = "About Lapce")]
     ShowAbout,
 
     #[strum(message = "Save All Files")]
@@ -556,12 +556,12 @@ pub enum LapceWorkbenchCommand {
     SaveAll,
 
     #[cfg(target_os = "macos")]
-    #[strum(message = "Install laplace to PATH")]
+    #[strum(message = "Install Lapce to PATH")]
     #[strum(serialize = "install_to_path")]
     InstallToPATH,
 
     #[cfg(target_os = "macos")]
-    #[strum(message = "Uninstall laplace from PATH")]
+    #[strum(message = "Uninstall Lapce from PATH")]
     #[strum(serialize = "uninstall_from_path")]
     UninstallFromPATH,
 

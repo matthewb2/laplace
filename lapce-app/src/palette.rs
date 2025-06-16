@@ -444,7 +444,7 @@ impl PaletteData {
             .map(|(kind, cmd)| {
                 let description = kind.symbol().to_string()
                     + " "
-                    + cmd.get_message().unwrap_or("");
+                    + &t!(cmd.get_message().unwrap_or("")).to_string();
 
                 PaletteItem {
                     content: PaletteItemContent::PaletteHelp { cmd },

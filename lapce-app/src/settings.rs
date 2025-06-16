@@ -692,7 +692,7 @@ fn settings_item_view(
                 .font_size(config.get().ui.font_size() as f32 + 1.0)
         }),
         stack((
-            label(move || item.description.clone()).style(move |s| {
+            label(move || t!(&item.description.clone().to_string())).style(move |s| {
                 s.min_width(0.0)
                     .max_width_pct(100.0)
                     .line_height(1.8)
